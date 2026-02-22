@@ -3,3 +3,4 @@ uvicorn
 searoute
 httpx
 websockets
+shapely
