@@ -1,0 +1,11 @@
+INFO:     Started server process [21978]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:57782 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57782 - "GET /style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57783 - "GET /main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57808 - "GET /api/all_ports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57858 - "POST /api/reachability HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57884 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57884 - "POST /api/weather HTTP/1.1" 200 OK
