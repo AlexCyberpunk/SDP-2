@@ -1,0 +1,23 @@
+{
+    "short_name": "Sea Distances Pro",
+    "name": "Sea Distances Pro 2 Web",
+    "description": "Calculates maritime distances, isochrones, and routes for vessels with weather forecasting.",
+    "icons": [
+        {
+            "src": "/icon-192x192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/icon-512x512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "any maskable"
+        }
+    ],
+    "start_url": "/",
+    "background_color": "#0f172a",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#3b82f6"
+}

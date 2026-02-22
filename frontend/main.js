@@ -718,8 +718,8 @@ calcBtn.addEventListener('click', async () => {
 
             const isMobile = window.innerWidth <= 768;
             map.fitBounds(routeLayer.getBounds(), {
-                paddingTopLeft: [50, isMobile ? 380 : 50],
-                paddingBottomRight: [50, 50]
+                paddingTopLeft: [40, isMobile ? 260 : 50],
+                paddingBottomRight: [40, isMobile ? 180 : 50]
             });
 
             currentDistanceNm = geojson.properties.length;
@@ -789,8 +789,8 @@ calcBtn.addEventListener('click', async () => {
 
             const isMobile = window.innerWidth <= 768;
             map.fitBounds(routeLayer.getBounds(), {
-                paddingTopLeft: [50, isMobile ? 200 : 50],
-                paddingBottomRight: [50, 50]
+                paddingTopLeft: [40, isMobile ? 260 : 50],
+                paddingBottomRight: [40, isMobile ? 180 : 50]
             });
 
             document.querySelector('#results-panel h3').textContent = 'Reachability Area';
@@ -843,8 +843,8 @@ calcBtn.addEventListener('click', async () => {
 
             const isMobile = window.innerWidth <= 768;
             map.fitBounds(routeLayer.getBounds(), {
-                paddingTopLeft: [50, isMobile ? 180 : 50],
-                paddingBottomRight: [50, 50]
+                paddingTopLeft: [40, isMobile ? 260 : 50],
+                paddingBottomRight: [40, isMobile ? 180 : 50]
             });
 
             wrapperPanel.classList.add('hidden');
@@ -1197,12 +1197,10 @@ if (saveImgBtn2) saveImgBtn2.addEventListener('click', downloadScreenshot);
 // Map Layers Collapse Toggle
 const toggleLayersBtn = document.getElementById('toggle-layers-btn');
 const layersContent = document.getElementById('layers-content');
-const layersChevron = document.getElementById('layers-chevron');
 
-if (toggleLayersBtn && layersContent && layersChevron) {
+if (toggleLayersBtn && layersContent) {
     toggleLayersBtn.addEventListener('click', () => {
         layersContent.classList.toggle('hidden');
-        layersChevron.textContent = layersContent.classList.contains('hidden') ? '▼' : '▲';
     });
 }
 
