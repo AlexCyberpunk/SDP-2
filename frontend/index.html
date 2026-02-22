@@ -25,8 +25,8 @@
 
             <div style="padding: 20px 20px 0 20px;">
                 <div class="mode-selector">
-                    <button id="mode-route" class="mode-btn active">Route Planner</button>
-                    <button id="mode-reach" class="mode-btn">Reachability</button>
+                    <button id="mode-reach" class="mode-btn active">Reachability</button>
+                    <button id="mode-route" class="mode-btn">Calculate Distance</button>
                     <button id="mode-saved" class="mode-btn">Saved Distances</button>
                 </div>
             </div>
@@ -252,8 +252,11 @@
             <!-- Map Layers & New Port Panel (Right Side) -->
             <div class="right-controls-container">
                 <div class="map-layers-panel">
-                    <h4>Map Layers</h4>
-                    <div class="layer-toggles">
+                    <button id="toggle-layers-btn"
+                        style="background:none; border:none; width:100%; text-align:left; display:flex; justify-content:space-between; color:var(--text-primary); cursor:pointer; font-size: 0.9rem; font-family: var(--font-family);">
+                        <strong>Map Layers</strong> <span id="layers-chevron">▼</span>
+                    </button>
+                    <div id="layers-content" class="layer-toggles hidden" style="margin-top: 10px;">
                         <label class="toggle-switch">
                             <input type="checkbox" id="layer-ports-btn">
                             <span class="slider"></span>
