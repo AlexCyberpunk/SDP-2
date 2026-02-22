@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sea Distance Calculator Pro</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app">
+        <aside class="sidebar" id="main-sidebar">
+            <header>
+                <h1>Sea Distance Pro</h1>
+                <p>Advanced Maritime Routing</p>
+                <button id="sidebar-close-btn" class="mobile-close-btn">&times;</button>
+            </header>
+
+            <div style="padding: 20px 20px 0 20px;">
+                <div class="mode-selector">
+                    <button id="mode-route" class="mode-btn active">Route Planner</button>
+                    <button id="mode-reach" class="mode-btn">Reachability</button>
+                    <button id="mode-saved" class="mode-btn">Saved Distances</button>
+                </div>
+            </div>
+
+            <div class="instruction" style="margin: 15px 20px 0 20px;" id="instruction-text">
+                Search for a Port/Vessel (e.g. "Rotterdam", "Sea Voyager") or click the map to set waypoints.
+            </div>
+
+            <div class="sidebar-scrollable">
+                <div class="waypoints">
+                    <div class="waypoint-card" id="card-origin">
+                        <div class="label">Origin <span class="dot origin-dot"></span></div>
+                        <div class="type-selector">
+                            <label><input type="radio" name="type-origin" value="map" checked> Map Point</label>
+                            <label><input type="radio" name="type-origin" value="port"> Port</label>
+                            <label><input type="radio" name="type-origin" value="vessel"> Vessel</label>
+                            <label><input type="radio" name="type-origin" value="coords"> Coords</label>
+                        </div>
+                        <div class="search-container hidden" id="coords-origin"
+                            style="display: flex; gap: 5px; margin-bottom: 5px;">
+                            <input type="number" id="lat-origin" placeholder="Lat (e.g. 51.5)" step="any"
+                                style="flex: 1; padding: 6px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: white;">
+                            <input type="number" id="lng-origin" placeholder="Lng (e.g. 0.1)" step="any"
+                                style="flex: 1; padding: 6px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: white;">
+                            <button id="apply-coords-origin" class="accent-btn" style="padding: 6px 10px;">Set</button>
+                        </div>
+                        <div class="search-container hidden" id="container-origin">
+                            <div class="search-box">
+                                <input type="text" id="search-origin" placeholder="Search..." autocomplete="off">
+                                <div id="results-origin" class="search-results hidden"></div>
+                            </div>
+                            <div class="history-box">
+                                <div class="history-title">Last checked</div>
+                                <div id="history-origin" class="history-list"></div>
+                            </div>
+                        </div>
+                        <div id="origin-coords" class="coords">Not set (Click Map)</div>
+                    </div>
+
+                    <div class="waypoint-card hidden" id="reachability-params">
+                        <div class="label">Navigation Parameters</div>
+                        <div class="form-group">
+                            <label for="reach-days">Days of Navigation</label>
+                            <input type="number" id="reach-days" value="3" min="1" max="14">
+                        </div>
+                        <div class="form-group">
+                            <label for="reach-speed">Vessel Speed (Knots)</label>
+                            <input type="number" id="reach-speed" value="10.0" step="0.5">
+                        </div>
+                    </div>
+
+                    <div class="waypoint-card hidden" id="card-saved">
+                        <div class="label">Precalculated Distances</div>
+                        <div class="form-group">
+                            <label for="saved-port-select">Select Port</label>
+                            <select id="saved-port-select">
+                                <option value="">Loading ports...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="saved-speed-select">Select Speed (Knots)</label>
+                            <select id="saved-speed-select" disabled>
+                                <option value="">Select a port first</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                            <button id="toggle-recent-saved-btn" class="secondary-btn"
+                                style="width: 100%; text-align: left; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; padding: 8px 10px;">
+                                Recent Saved <span id="recent-saved-chevron">▼</span>
+                            </button>
+                            <div id="recent-saved-list" class="history-list hidden" style="margin-top: 10px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="waypoint-card" id="card-mid">
+                        <div class="label">Midpoint (Optional) <span class="dot mid-dot"></span></div>
+                        <div class="type-selector">
+                            <label><input type="radio" name="type-mid" value="map" checked> Map Point</label>
+                            <label><input type="radio" name="type-mid" value="port"> Port</label>
+                            <label><input type="radio" name="type-mid" value="vessel"> Vessel</label>
+                            <label><input type="radio" name="type-mid" value="coords"> Coords</label>
+                        </div>
+                        <div class="search-container hidden" id="coords-mid"
+                            style="display: flex; gap: 5px; margin-bottom: 5px;">
+                            <input type="number" id="lat-mid" placeholder="Lat" step="any"
+                                style="flex: 1; padding: 6px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: white;">
+                            <input type="number" id="lng-mid" placeholder="Lng" step="any"
+                                style="flex: 1; padding: 6px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: white;">
+                            <button id="apply-coords-mid" class="accent-btn" style="padding: 6px 10px;">Set</button>
+                        </div>
+                        <div class="search-container hidden" id="container-mid">
+                            <div class="search-box">
+                                <input type="text" id="search-mid" placeholder="Search..." autocomplete="off">
+                                <div id="results-mid" class="search-results hidden"></div>
+                            </div>
+                            <div class="history-box">
+                                <div class="history-title">Last checked</div>
+                                <div id="history-mid" class="history-list"></div>
+                            </div>
+                        </div>
+                        <div id="mid-coords" class="coords">Not set</div>
+                    </div>
+
+                    <div class="waypoint-card" id="card-dest">
+                        <div class="label">Destination <span class="dot dest-dot"></span></div>
+                        <div class="type-selector">
+                            <label><input type="radio" name="type-dest" value="map" checked> Map Point</label>
+                            <label><input type="radio" name="type-dest" value="port"> Port</label>
+                            <label><input type="radio" name="type-dest" value="vessel"> Vessel</label>
+                            <label><input type="radio" name="type-dest" value="coords"> Coords</label>
+                        </div>
+                        <div class="search-container hidden" id="coords-dest"
+                            style="display: flex; gap: 5px; margin-bottom: 5px;">
+                            <input type="number" id="lat-dest" placeholder="Lat" step="any"
+                                style="flex: 1; padding: 6px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: white;">
+                            <input type="number" id="lng-dest" placeholder="Lng" step="any"
+                                style="flex: 1; padding: 6px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.2); color: white;">
+                            <button id="apply-coords-dest" class="accent-btn" style="padding: 6px 10px;">Set</button>
+                        </div>
+                        <div class="search-container hidden" id="container-dest">
+                            <div class="search-box">
+                                <input type="text" id="search-dest" placeholder="Search..." autocomplete="off">
+                                <div id="results-dest" class="search-results hidden"></div>
+                            </div>
+                            <div class="history-box">
+                                <div class="history-title">Last checked</div>
+                                <div id="history-dest" class="history-list"></div>
+                            </div>
+                        </div>
+                        <div id="dest-coords" class="coords">Not set (Click Map)</div>
+                    </div>
+                </div>
+
+                <!-- Vessel Parameters -->
+                <div id="vessel-params-panel" class="weather-panel" style="margin-top: 15px; margin-bottom: 0;">
+                    <h3>Vessel Parameters</h3>
+                    <div class="form-group">
+                        <select id="vessel-class-select" class="vessel-select">
+                            <!-- Options populated via JS -->
+                        </select>
+                    </div>
+                    <div class="weather-row" style="align-items: center;">
+                        <label for="vessel-speed-input">Est. Speed (Knots)</label>
+                        <input type="number" id="vessel-speed-input" value="12.0" step="0.5" min="5"
+                            style="width: 80px; padding: 4px; text-align: right; background: rgba(0,0,0,0.2); border: 1px solid var(--border); color: var(--text-primary); border-radius: 4px;">
+                    </div>
+                    <div class="weather-row" style="align-items: center;">
+                        <label for="vessel-fuel-input">Est. Fuel (mt/day)</label>
+                        <input type="number" id="vessel-fuel-input" value="20.0" step="0.5" min="1"
+                            style="width: 80px; padding: 4px; text-align: right; background: rgba(0,0,0,0.2); border: 1px solid var(--border); color: var(--text-primary); border-radius: 4px;">
+                    </div>
+                </div>
+            </div> <!-- End Scrollable -->
+
+            <div class="sidebar-footer">
+                <div class="button-group">
+                    <button id="calculate-btn" class="primary-btn" disabled>Calculate Route</button>
+                    <button id="clear-btn" class="secondary-btn">Clear</button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="map-container">
+            <!-- Centered Floating Results Overlay -->
+            <div id="centered-results-wrapper" class="centered-results-wrapper hidden">
+                <div id="results-panel" class="results-panel">
+                    <h3>Voyage Estimation</h3>
+                    <div class="result-row">
+                        <span>Distance (NM)</span>
+                        <strong id="res-distance">--</strong>
+                    </div>
+                    <div class="result-row">
+                        <span>Base Voyage Time</span>
+                        <strong id="res-time">--</strong>
+                    </div>
+                    <div class="result-row">
+                        <span>Base Fuel (mt)</span>
+                        <strong id="res-fuel">--</strong>
+                    </div>
+                    <div style="margin-top: 10px; display: flex; gap: 8px;">
+                        <button id="weather-btn" class="accent-btn hidden"
+                            style="flex: 1; padding: 6px; font-size: 0.8rem;">Check Weather</button>
+                        <button id="save-search-btn" class="accent-btn hidden"
+                            style="flex: 1; padding: 6px; font-size: 0.8rem;">Save Search</button>
+                        <button id="save-img-btn-1" class="accent-btn"
+                            style="flex: 1; padding: 6px; font-size: 0.8rem;">Save as Image</button>
+                    </div>
+                </div>
+
+                <div id="weather-panel" class="weather-panel hidden">
+                    <h3>Weather Impact</h3>
+                    <div id="weather-status" class="weather-row"
+                        style="margin-bottom: 10px; color: var(--text-secondary); text-align: center; border-bottom: 1px dashed var(--border); padding-bottom: 10px;">
+                        <!-- Populated by JS -->
+                    </div>
+                    <div class="result-row">
+                        <span>Avg Wave Height</span>
+                        <strong id="weather-wave">--</strong>
+                    </div>
+                    <div class="result-row">
+                        <span>Weather Adjustment</span>
+                        <strong id="weather-adj" style="color:var(--accent-red)">--</strong>
+                    </div>
+                    <div class="result-row"
+                        style="margin-top: 10px; border-top: 1px dashed var(--border); padding-top: 10px;">
+                        <span>Adjusted Time</span>
+                        <strong id="weather-time">--</strong>
+                    </div>
+                    <div class="result-row">
+                        <span>Adjusted Fuel</span>
+                        <strong id="weather-fuel">--</strong>
+                    </div>
+                    <div style="margin-top: 10px; display: flex; gap: 8px;">
+                        <button id="save-img-btn-2" class="accent-btn"
+                            style="flex: 1; padding: 6px; font-size: 0.8rem;">Save as Image</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="map"></div>
+
+            <!-- Map Layers & New Port Panel (Right Side) -->
+            <div class="right-controls-container">
+                <div class="map-layers-panel">
+                    <h4>Map Layers</h4>
+                    <div class="layer-toggles">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="layer-ports-btn">
+                            <span class="slider"></span>
+                            <span class="label-text">All Ports</span>
+                        </label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="layer-vessels-btn">
+                            <span class="slider"></span>
+                            <span class="label-text">Live Vessels</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button id="cp-toggle-panel-btn" class="icon-btn" title="Add Custom Port" style="align-self: flex-end;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                    </svg>
+                    <span>New Port</span>
+                </button>
+
+                <!-- Custom Port Panel (Hidden by default) -->
+                <div id="custom-port-panel" class="custom-port-panel hidden">
+                    <h3>Add Custom Port</h3>
+                    <div class="form-group">
+                        <input type="text" id="cp-name" placeholder="Port Name" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="cp-country" placeholder="Country" autocomplete="off">
+                    </div>
+                    <div class="cp-coords">
+                        Selected: <span id="cp-coords-display">None</span>
+                    </div>
+                    <div class="button-group cp-buttons">
+                        <button id="cp-select-map-btn" class="secondary-btn">Select on Map</button>
+                        <button id="cp-add-btn" class="primary-btn" disabled>Confirm Add</button>
+                    </div>
+                    <div id="cp-message" class="cp-message hidden"></div>
+                </div>
+            </div>
+
+            <!-- Custom Port Container & Disclaimer -->
+            <div class="custom-port-container" style="display: flex; flex-direction: column; gap: 10px;">
+                <button id="new-calc-btn" class="icon-btn" title="New Calculation">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span>New Calculation</span>
+                </button>
+                <button id="disclaimer-btn" class="icon-btn" title="Disclaimer"
+                    style="background-color: var(--surface-light);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <span>Disclaimer</span>
+                </button>
+            </div>
+
+            <!-- Disclaimer Modal -->
+            <div id="disclaimer-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h3 style="margin-top: 0; color: var(--accent-red);">Disclaimer</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.5; font-size: 0.9rem;">
+                        This web is just for learning reasons and all the data could be approximative or wrong.
+                    </p>
+                    <button id="close-disclaimer-btn" class="primary-btn"
+                        style="width: 100%; margin-top: 15px;">Close</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- HTML2Canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Custom JS -->
+    <script src="main.js"></script>
+</body>
+
+</html>

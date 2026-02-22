@@ -1,0 +1,141 @@
+INFO:     Started server process [44067]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:64438 - "GET /api/all_ports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64710 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64710 - "GET /style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64712 - "GET /main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64710 - "GET /api/all_ports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64710 - "GET /api/all_vessels HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64902 - "GET /api/all_ports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64963 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64963 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49887 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49887 - "GET /style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49888 - "GET /main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49944 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49944 - "GET /style.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49945 - "GET /main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:50160 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50160 - "GET /style.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:50161 - "GET /main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:50581 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /style.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:50582 - "GET /main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:50643 - "GET /api/search?q=ro&filter_type=port HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50643 - "GET /api/search?q=rott&filter_type=port HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50817 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50817 - "GET /style.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:50818 - "GET /main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51047 - "GET /api/all_ports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51079 - "GET /api/all_vessels HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51271 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51271 - "GET /style.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51274 - "GET /main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52018 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52018 - "GET /style.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52019 - "GET /main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52059 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52129 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52190 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52731 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52731 - "GET /style.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52734 - "GET /main.js HTTP/1.1" 304 Not Modified
+Cache hit for route: -5.9345,43.5931_4.442447,51.904383
+INFO:     127.0.0.1:52775 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52775 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52855 - "GET /api/search?q=carta&filter_type=port HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52855 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52855 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52976 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52976 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53042 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53042 - "POST /api/weather HTTP/1.1" 200 OK
+Cache hit for route: -64.95117187500001,44.902577996288876_-0.990143,37.585035
+INFO:     127.0.0.1:53071 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53071 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53204 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53204 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53246 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53246 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53282 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53282 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53698 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53698 - "GET /style.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53699 - "GET /main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53817 - "GET /api/all_ports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53942 - "GET /api/search?q=kun&filter_type=port HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53974 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53974 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54200 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54200 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54652 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54652 - "GET /style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54653 - "GET /main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54699 - "POST /api/route HTTP/1.1" 200 OK
+Cache hit for route: -75.52002,10.402529_-17.440796,14.682382
+INFO:     127.0.0.1:54743 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54891 - "GET /api/search?q=sa&filter_type=port HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54891 - "GET /api/search?q=sagunto&filter_type=port HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54891 - "GET /api/search?q=Sagunto&filter_type=port HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54953 - "GET /api/search?q=ber&filter_type=port HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54953 - "GET /api/search?q=berg&filter_type=port HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54953 - "GET /api/search?q=bergeb&filter_type=port HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54953 - "GET /api/search?q=bergeb%C2%A1&filter_type=port HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54953 - "GET /api/search?q=bergeb%C2%A1%C2%A1&filter_type=port HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54953 - "GET /api/search?q=berge&filter_type=port HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54953 - "POST /api/route HTTP/1.1" 200 OK
+Cache hit for route: -0.220787,39.653172_5.308926,60.396562
+INFO:     127.0.0.1:55073 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55073 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55073 - "GET /style.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55086 - "GET /main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55129 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55129 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55129 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55199 - "GET /api/search?q=aga&filter_type=port HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55199 - "GET /api/search?q=agadir&filter_type=port HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55199 - "GET /api/search?q=cast&filter_type=port HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55199 - "GET /api/search?q=caste&filter_type=port HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55213 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55272 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55986 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55986 - "GET /style.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55989 - "GET /main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56069 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56069 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56496 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56496 - "GET /style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56497 - "GET /main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56573 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56573 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56617 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56617 - "GET /style.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57060 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57060 - "GET /style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57061 - "GET /main.js HTTP/1.1" 304 Not Modified
+Cache hit for route: 0.009426,39.966668_-9.556429,30.435613
+INFO:     127.0.0.1:57146 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57146 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57291 - "GET /api/all_ports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63423 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63423 - "GET /style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63427 - "GET /main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63528 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63554 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63554 - "POST /api/route HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63554 - "POST /api/weather HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52457 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52457 - "GET /style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52460 - "GET /main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52483 - "POST /api/reachability HTTP/1.1" 405 Method Not Allowed
+INFO:     127.0.0.1:52483 - "POST /api/reachability HTTP/1.1" 405 Method Not Allowed
+INFO:     127.0.0.1:53033 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53033 - "GET /style.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53035 - "GET /main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53083 - "POST /api/reachability HTTP/1.1" 405 Method Not Allowed
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [44067]
