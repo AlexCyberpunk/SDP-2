@@ -362,15 +362,47 @@ async def generate_reachability(req: ReachabilityRequest):
 # Ensure precalc dir exists
 os.makedirs("precalc", exist_ok=True)
 
+import zipfile
 from fastapi.responses import Response
+import glob
+
+# Auto-reconstruct the split ZIP file if downloading from GitHub limits
+zip_path = "precalc_data.zip"
+if not os.path.exists(zip_path):
+    parts = sorted(glob.glob("precalc_data_part_*"))
+    if parts:
+        print(f"Reconstructing {zip_path} from {len(parts)} parts...")
+        with open(zip_path, 'wb') as outfile:
+            for part in parts:
+                with open(part, 'rb') as infile:
+                    outfile.write(infile.read())
+        print("Reconstruction complete.")
 
 @app.get("/api/precalc/{filename}")
 async def get_precalc_file(filename: str):
-    file_path = os.path.join("precalc", filename)
-    if os.path.exists(file_path):
-        return FileResponse(file_path)
-    raise HTTPException(status_code=404, detail="File not found")
-
+    if not os.path.exists(zip_path):
+        # Fallback to direct directory if zip isn't generated
+        file_path = os.path.join("precalc", filename)
+        if os.path.exists(file_path):
+            return FileResponse(file_path)
+        raise HTTPException(status_code=404, detail="File not found")
+        
+    try:
+        with zipfile.ZipFile(zip_path, 'r') as zf:
+            internal_path = f"precalc/{filename}"
+            if internal_path in zf.namelist():
+                content = zf.read(internal_path)
+                return Response(content, media_type="application/json")
+            else:
+                # Try simple filename just in case it was zipped without the precalc/ prefix
+                if filename in zf.namelist():
+                    content = zf.read(filename)
+                    return Response(content, media_type="application/json")
+                raise HTTPException(status_code=404, detail="File not found in archive")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # Serve the frontend static files
 app.mount("/", StaticFiles(directory="../frontend", html=True), name="frontend")
