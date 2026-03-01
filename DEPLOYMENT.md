@@ -1,25 +1,48 @@
-# Online Deployment Guide
+# Online Deployment Guide (GitLab + Render)
 
-To deploy Sea Distances to a live online environment (e.g. Render, Railway, DigitalOcean, AWS), the application has been fully containerized using Docker.
+To deploy Sea Distances to a live online environment for free without facing file size limits, we will use **GitLab** for our code repository and **Render** for our web hosting.
 
-Because Sea Distances runs a Python FastAPI backend and a static HTML/JS frontend, the ideal and easiest way to run the entire project is as a single combined container where Uvicorn serves both the API endpoints and the static frontend files.
+This project is fully containerized using a `Dockerfile`, meaning Render will automatically build the environment exactly as it runs on your machine.
 
-## 1. Using Docker (Recommended)
-This repository now contains a `Dockerfile`. Any modern cloud provider that supports "deploying from a Dockerfile" can host this instantly.
+## Step 1: Upload to GitLab via Terminal (Bulletproof Method)
+Dragging folders into a web browser is notoriously buggy. Since you're on a Mac (which has Git pre-installed), the absolute most reliable way to get this perfect structure into GitLab is using your Terminal!
 
-1. Create a GitHub repository and push this entire project to it.
-2. Sign up for a service like [Render.com](https://render.com) or [Railway.app](https://railway.app).
-3. Create a new "Web Service".
-4. Link it to your GitHub repository.
-5. The cloud provider will automatically detect the `Dockerfile`, build the Python environment, install all dependencies (including `searoute`), and launch the app.
-6. The service runs on Port `8000`.
+I have already done the hard work of initializing the invisible tracking files (`git init`) and bundling all 79 files perfectly for you (`git commit`). 
 
-## 2. Running Locally with Docker Compose
-If you want to test the deployment container on your own Mac or another machine before publishing it to the cloud:
-1. Ensure you have Docker Desktop installed.
-2. Open the terminal in the root folder of the project.
-3. Run: `docker-compose up --build`
-4. Access the web interface at `http://localhost:8000`
+All you have to do when you return is open your Mac Terminal and run these **3 lines exactly as shown**:
 
-## 3. Important Note
-We moved the `searoute-1.4.3` library's core folder directly inside the `backend/` directory. This is critical for cloud deployments, because it guarantees the cloud Linux server has the library file relative to the execution environment, breaking the dependency on your local `/Volumes/SSD MAC...` absolute path.
+1. Move into the optimized folder:
+   ```bash
+   cd "/Volumes/SSD MAC  MINI 2025/Applications/Antigravity/Sea Distances/Sea Distances pro 2 web"
+   ```
+2. Connect it to your empty GitLab repository (using your actual URL):
+   ```bash
+   git remote add origin https://gitlab.com/greenaldo/MaritimeDistances2.git
+   ```
+3. Push the files up to the internet:
+   ```bash
+   git push -u origin main
+   ```
+   *(Note: It will prompt you for your GitLab username and password. If you have Two-Factor Authentication enabled on GitLab, use a "Personal Access Token" instead of your password!)*
+
+Once that command finishes, refresh your GitLab page. You will see the `Dockerfile` absolutely correctly sitting right on the front page. Rendering will happen flawlessly!
+
+## Step 2: Deploy to Render.com
+Render is a popular cloud hosting platform that can read your GitLab repository and spin up your container for free.
+
+1. Go to [Render.com](https://render.com) and sign up/log in using your GitLab account (this makes linking repositories seamless).
+2. Click the **New +** button in the dashboard and select **Web Service**.
+3. Look for the "Connect a repository" section on the right side. You should see your GitLab repositories listed there. Click **Connect** next to your `sea-distances-web` repository.
+4. Render will ask you to configure the Web Service. Fill it out as follows:
+   * **Name**: `sea-distances` (or whatever you prefer)
+   * **Region**: Choose whatever is closest to you.
+   * **Branch**: `main`
+   * **Environment**: `Docker`
+5. Select the **Free** instance type at the bottom.
+6. Click **Create Web Service**.
+
+## Step 3: Wait and Launch!
+Render will now read your code, download the Linux Ubuntu environment from the `Dockerfile`, install the Python `searoute` dependencies, and start the Fast API server on Port `8000`. 
+This usually takes **3 to 5 minutes** the very first time.
+
+Watch the log console on Render. Once you see `Application startup complete.` and "Your Web Service is live", you can click the `https://...onrender.com` link at the top left to use your Sea Distances app from anywhere in the world!

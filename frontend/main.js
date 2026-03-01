@@ -15,7 +15,7 @@ let currentBaseTime = 0; // days
 let currentBaseFuel = 0; // mt
 let currentDistanceNm = 0;
 let activeInputContext = 'origin';
-let currentMode = 'reach'; // 'route' | 'reach'
+let currentMode = 'route'; // 'route' | 'reach'
 
 // --- VESSEL PARAMETERS ---
 const VESSEL_CLASSES = [
@@ -65,11 +65,6 @@ window.addEventListener('DOMContentLoaded', () => {
         vesselSelect.appendChild(opt);
     });
     updateVesselDisplay();
-
-    // Default mode
-    if (modeReachBtn) {
-        modeReachBtn.click();
-    }
 });
 
 const updateVesselDisplay = () => {
@@ -715,12 +710,7 @@ calcBtn.addEventListener('click', async () => {
             routeLayer = L.geoJSON(featureCollection, {
                 style: function (f) { return { color: f.properties.color, weight: 4, dashArray: '5, 5' }; }
             }).addTo(map);
-
-            const isMobile = window.innerWidth <= 768;
-            map.fitBounds(routeLayer.getBounds(), {
-                paddingTopLeft: [40, isMobile ? 260 : 50],
-                paddingBottomRight: [40, isMobile ? 180 : 50]
-            });
+            map.fitBounds(routeLayer.getBounds(), { padding: [50, 50] });
 
             currentDistanceNm = geojson.properties.length;
 
@@ -787,11 +777,7 @@ calcBtn.addEventListener('click', async () => {
                 return `Day ${layer.feature.properties.day} Reach < br > ${layer.feature.properties.distance_nm.toFixed(0)} NM`;
             }).addTo(map);
 
-            const isMobile = window.innerWidth <= 768;
-            map.fitBounds(routeLayer.getBounds(), {
-                paddingTopLeft: [40, isMobile ? 260 : 50],
-                paddingBottomRight: [40, isMobile ? 180 : 50]
-            });
+            map.fitBounds(routeLayer.getBounds(), { padding: [50, 50] });
 
             document.querySelector('#results-panel h3').textContent = 'Reachability Area';
             document.querySelectorAll('#results-panel .result-row').forEach(el => el.style.display = 'none');
@@ -841,11 +827,7 @@ calcBtn.addEventListener('click', async () => {
                 return `Day ${layer.feature.properties.day} Reach < br > ${layer.feature.properties.distance_nm.toFixed(0)} NM`;
             }).addTo(map);
 
-            const isMobile = window.innerWidth <= 768;
-            map.fitBounds(routeLayer.getBounds(), {
-                paddingTopLeft: [40, isMobile ? 260 : 50],
-                paddingBottomRight: [40, isMobile ? 180 : 50]
-            });
+            map.fitBounds(routeLayer.getBounds(), { padding: [50, 50] });
 
             wrapperPanel.classList.add('hidden');
             weatherPanel.classList.add('hidden');
@@ -1193,14 +1175,3 @@ const downloadScreenshot = () => {
 
 if (saveImgBtn1) saveImgBtn1.addEventListener('click', downloadScreenshot);
 if (saveImgBtn2) saveImgBtn2.addEventListener('click', downloadScreenshot);
-
-// Map Layers Collapse Toggle
-const toggleLayersBtn = document.getElementById('toggle-layers-btn');
-const layersContent = document.getElementById('layers-content');
-
-if (toggleLayersBtn && layersContent) {
-    toggleLayersBtn.addEventListener('click', () => {
-        layersContent.classList.toggle('hidden');
-    });
-}
-

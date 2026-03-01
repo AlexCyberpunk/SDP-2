@@ -729,8 +729,6 @@ button {
         min-width: 100%;
         /* Stretch to take full width of wrapper */
         margin: 0;
-        max-height: 40vh;
-        overflow-y: auto;
     }
 
     /* Ensure Map Layers panel and Custom Port Panel avoid overlapping */

@@ -24,11 +24,5 @@ COPY . /app/
 # Expose port 8000 for the FastAPI server
 EXPOSE 8000
 
-# Change working directory so local imports and relative file paths work
-WORKDIR /app/backend
-
-# Generate precalculated isochrone data for ports during the docker build phase (runs once upon deployment)
-RUN python precalc_spain.py
-
-# Run Uvicorn directly serving main.py
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Run Uvicorn directly serving the main.py inside backend which also mounts our frontend static files
+CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
